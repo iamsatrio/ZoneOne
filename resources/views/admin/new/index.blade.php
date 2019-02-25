@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Zone One - User Area</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{asset('philbert/favicon.ico')}}">
@@ -38,6 +38,16 @@
 
     <!-- Main Content -->
     <div class="page-wrapper">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="container-fluid">
 
             <!-- Title -->
@@ -73,16 +83,20 @@
                                     <div class="panel-body">
                                         <p class="text-muted">Select the <code>menu</code> below .</p>
                                         <div class="button-list mt-25">
-                                            <a href="{{route('home')}}" class="btn btn-primary btn-anim"><i class="zmdi zmdi-apps"></i><span
+                                            <a href="{{route('home')}}" class="btn btn-primary btn-anim"><i
+                                                        class="zmdi zmdi-apps"></i><span
                                                         class="btn-text">Dashboard</span></a>
 
-                                            <a href="{{route('user.index')}}" class="btn btn-primary btn-anim"><i class="fa fa-users"></i><span
+                                            <a href="{{route('user.index')}}" class="btn btn-primary btn-anim"><i
+                                                        class="fa fa-users"></i><span
                                                         class="btn-text">Manage Users</span></a>
 
-                                            <a href="{{route('product.index')}}" class="btn btn-primary btn-anim"><i class="fa fa-shopping-bag"></i><span
+                                            <a href="{{route('product.index')}}" class="btn btn-primary btn-anim"><i
+                                                        class="fa fa-shopping-bag"></i><span
                                                         class="btn-text">Manage Product</span></a>
 
-                                            <a href="{{route('transaction.index')}}" class="btn btn-primary btn-anim"><i class="zmdi zmdi-money-box"></i><span
+                                            <a href="{{route('transaction.index')}}" class="btn btn-primary btn-anim"><i
+                                                        class="zmdi zmdi-money-box"></i><span
                                                         class="btn-text">Transaction</span></a>
 
                                         </div>
@@ -95,7 +109,7 @@
             </div>
         </div>
         <!-- Footer -->
-    @include('admin.new.layouts.footer')
+        @include('footer')
     <!-- /Footer -->
 
     </div>

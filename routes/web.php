@@ -39,6 +39,9 @@ Route::middleware('auth')->group(function(){
 //review
     Route::resource('review','ReviewController');
 
+    //profile
+    Route::put('profile/{id}','UserController@profile')->name('profile');
+
 //alamat
     Route::get('indonesia/regency','IndonesiaController@regency')->name('indonesia.regency');
     Route::get('indonesia/district','IndonesiaController@district')->name('indonesia.district');

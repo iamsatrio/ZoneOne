@@ -142,7 +142,7 @@
 			</div>
 			
 			<!-- Footer -->
-		@include('admin.new.layouts.footer')
+			@include('footer')
 			<!-- /Footer -->
 			
 		</div>

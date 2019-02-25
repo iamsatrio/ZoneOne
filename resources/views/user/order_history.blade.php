@@ -105,7 +105,7 @@
         </div>
 
         <!-- Footer -->
-       @include('user.footer')
+        @include('footer')
         <!-- /Footer -->
 
     </div>
