@@ -64,6 +64,10 @@ Route::resource('user','UserController');
 //product category
 Route::resource('productCategory','ProductCategoryController');
 
+//search product
+Route::post('search','ProductController@search')->name('search');
+Route::get('searchResult','ProductController@searchResult')->name('searchResult');
+
 Route::get('empty', function() {
     Cart::destroy();
 });

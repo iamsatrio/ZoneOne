@@ -10,6 +10,7 @@ use App\Review;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -221,5 +222,15 @@ class ProductController extends Controller
             }
         }
 
+    }
+
+    public function search(Request $request){
+//        $result = DB::table('products')
+//            ->join('product_categories', 'product_categories.id', '=', 'products.category_id')
+//            ->where('products.name','LIKE',"%$request->product%")
+//            ->orWhere('product_categories.name','LIKE',"%$request->product%")->get();
+        $result = Product::where('name','LIKE',"%$request->product%")->get();
+$categories = ProductCategory::all();
+        return view('search',compact(['result','categories']));
     }
 }

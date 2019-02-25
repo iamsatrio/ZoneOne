@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="home_content">
-                                <div class="home_title">{{$category}}<span>.</span></div>
+                                <div class="home_title">Search Result<span>.</span></div>
                                 <div class="home_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                         Nullam a ultricies metus. Sed nec molestie eros. Sed viverra velit venenatis
                                         fermentum luctus.</p></div>
@@ -80,7 +80,7 @@
 
                     <div class="product_grid">
 
-                    @foreach($products as $data)
+                    @foreach($result as $data)
                         <!-- Product -->
                             <div class="product">
                                 <div class="product_image"><img src="{{asset('storage/'.$data->image)}}" alt=""></div>
