@@ -34,6 +34,6 @@ class Shipment extends Model
 
     public function village()
     {
-        return $this->belongsTo(Village::class);
+        return $this->belongsTo(Village::class,'village_id');
     }
 }

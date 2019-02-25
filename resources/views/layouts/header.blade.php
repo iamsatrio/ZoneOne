@@ -49,6 +49,10 @@
                                     <a href="{{route('home')}}">
                                         <div><i class="fa fa-user-circle"></i> {{Auth::user()->name}}</div>
                                     </a>
+                                    @else
+                                    <a href="{{route('login')}}">
+                                        <div><i class="fa fa-sign-in"></i> Login</div>
+                                    </a>
                                 @endauth
                             </div>
                             <div class="search">

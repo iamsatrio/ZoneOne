@@ -36,6 +36,9 @@ Route::middleware('auth')->group(function(){
 //order history
     Route::resource('order','DetailTransactionController');
 
+//review
+    Route::resource('review','ReviewController');
+
 //alamat
     Route::get('indonesia/regency','IndonesiaController@regency')->name('indonesia.regency');
     Route::get('indonesia/district','IndonesiaController@district')->name('indonesia.district');

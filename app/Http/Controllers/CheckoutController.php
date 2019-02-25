@@ -86,6 +86,7 @@ class CheckoutController extends Controller
                 foreach (Cart::content() as $item) {
                     DetailTransaction::create([
                         'product_id' => $item->id,
+                        'user_id' => Auth::user()->id,
                         'transaction_id' => $maxTransaction,
                         'qty' => $item->qty,
                         'price' => $item->price - $item->discount,
@@ -128,6 +129,7 @@ class CheckoutController extends Controller
                 foreach (Cart::content() as $item) {
                     DetailTransaction::create([
                         'product_id' => $item->id,
+                        'user_id' => Auth::user()->id,
                         'transaction_id' => $maxTransaction,
                         'qty' => $item->qty,
                         'price' => $item->price - $item->discount,

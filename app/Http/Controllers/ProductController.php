@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\DetailTransaction;
 use App\Product;
 use App\ProductCategory;
 use App\ProductImage;
+use App\Review;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -110,12 +113,26 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
-        // dd($product);
-        $categories = ProductCategory::all();
-        $products = Product::limit(4)->get();
-        $multiple_images = ProductImage::where('product_id', $product->id)->limit(4)->get();
-        return view('product', compact(['product', 'products', 'multiple_images', 'categories']));
+        $transaction = null;
+        if(!empty(Auth::user())){
+            $transaction = DetailTransaction::where('user_id', Auth::user()->id)->where('product_id', $product->id)->first();
+            $reviews = Review::where('product_id',$product->id)->get();
+            $review = Review::where('user_id',Auth::user()->id)->first();
+
+            $categories = ProductCategory::all();
+            $products = Product::limit(4)->get();
+            $multiple_images = ProductImage::where('product_id', $product->id)->limit(4)->get();
+            return view('product', compact(['product', 'products', 'multiple_images', 'categories','transaction','reviews','review']));
+        }else{
+
+            $reviews = Review::where('product_id',$product->id)->get();
+            $categories = ProductCategory::all();
+            $products = Product::limit(4)->get();
+            $multiple_images = ProductImage::where('product_id', $product->id)->limit(4)->get();
+            return view('product', compact(['product', 'products', 'multiple_images', 'categories','transaction','reviews']));
+        }
+
+
     }
 
     /**

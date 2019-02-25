@@ -17,6 +17,19 @@
     <link rel="stylesheet" type="text/css" href="{{asset('sublime/plugins/OwlCarousel2-2.2.1/animate.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('sublime/styles/product.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('sublime/styles/product_responsive.css')}}">
+
+    <!-- Custom CSS -->
+    {{--    <link href="{{asset('philbert/dist/css/style.css')}}" rel="stylesheet" type="text/css">--}}
+
+    <style>
+        .checked {
+            color: orange;
+        }
+
+        .card-inner{
+            margin-left: 4rem;
+        }
+    </style>
 </head>
 <body>
 
@@ -134,15 +147,95 @@
 
             <div class="row description_row">
                 <div class="col">
-                    <div class="description_title_container">
-                        <div class="description_title">Description</div>
-                        <div class="reviews_title"><a href="#">Reviews <span>(1)</span></a></div>
-                    </div>
-                    <div class="description_text">
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Phasellus id nisi quis
-                            justo tempus mollis sed et dui. In hac habitasse platea dictumst. Suspendisse ultrices
-                            mauris diam. Nullam sed aliquet elit. Mauris consequat nisi ut mauris efficitur lacinia.</p>
+                    <nav>
+                        <div class="nav nav-tabs description_title_container" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link description_title active " id="nav-home-tab" data-toggle="tab"
+                               href="#nav-description" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                            <a class="nav-item nav-link description_title" id="nav-profile-tab" data-toggle="tab"
+                               href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Review
+                                ({{count($reviews)}})</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade description_text show active" id="nav-description" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <p>{{$product->description}}</p>
+                        </div>
+                        <div class="tab-pane fade description_text" id="nav-profile" role="tabpanel"
+                             aria-labelledby="nav-profile-tab">
+                            @if(count($reviews) == 0)
+                            <p class="muted review-tag pt-15">No reviews yet.</p>
+                                @else
+                                @foreach($reviews as $data)
+                                    <br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                                                <p class="text-secondary text-center">{{date('d F Y H:i',strtotime($data->created_at))}}</p>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <p>
+                                                    <strong>{{$data->user->name}}</strong>
+                                                        @for($i=1;$i<=5; $i++)
+                                                            @if($i<=$data->rating)
+                                                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                                            @else
+                                                                <span class="float-right"><i class="fa fa-star"></i></span>
+                                                            @endif
+                                                        @endfor
+                                                </p>
+                                                <div class="clearfix"></div>
+                                                <p>{{$data->review}}.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            @endif
+                            <div class="row mt-40">
+                                <div class="col-sm-6">
+                                    <div class="form-wrap">
+                                        @if(!empty($transaction))
+                                            @if(empty($review))
+                                                <hr>
+                                            <form action="{{route('review.store')}}" method="POST">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label class="control-label mb-10" for="review">What do you think about this product ? </label>
+                                                    <span class="fa fa-star" id="star1" onclick="add(this,1)"></span>
+                                                    <span class="fa fa-star" id="star2" onclick="add(this,2)"></span>
+                                                    <span class="fa fa-star" id="star3" onclick="add(this,3)"></span>
+                                                    <span class="fa fa-star" id="star4" onclick="add(this,4)"></span>
+                                                    <span class="fa fa-star" id="star5" onclick="add(this,5)"></span>
+                                                    <textarea class="form-control" id="review" name="review"
+                                                              placeholder="add review"></textarea>
+                                                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                                    <input type="hidden" name="rating" id="star">
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <button type="submit" class="btn btn-success  mr-10">Submit</button>
+                                                </div>
+                                            </form>
+                                                @else
+                                                <br>
+                                                <div class="alert alert-success">
+                                                    <p class="muted review-tag pt-15">You have been review this product.</p>
+                                                </div>
+                                                @endif
+                                        @else
+                                            <br>
+                                            <div class="form-group mb-0">
+                                                <p class="muted review-tag pt-15">You must buy this product to
+                                                    review.</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,5 +301,33 @@
 <script src="{{asset('sublime/plugins/easing/easing.js')}}"></script>
 <script src="{{asset('sublime/plugins/parallax-js-master/parallax.min.js')}}"></script>
 <script src="{{asset('sublime/js/product.js')}}"></script>
+
+
+<!-- Starrr JavaScript -->
+<script src="{{asset('philbert/dist/js/starrr.js')}}"></script>
+
+<!-- Product Detail Data JavaScript -->
+<script src="{{asset('philbert/dist/js/product-detail-data.js')}}"></script>
+
+<script>
+    function add(ths, sno) {
+
+
+        for (var i = 1; i <= 5; i++) {
+            var cur = document.getElementById("star" + i)
+            cur.className = "fa fa-star"
+        }
+
+        for (var i = 1; i <= sno; i++) {
+            var cur = document.getElementById("star" + i)
+            if (cur.className == "fa fa-star") {
+                $('#star').val(i);
+                cur.className = "fa fa-star checked"
+            }
+        }
+
+    }
+</script>
+
 </body>
 </html>
